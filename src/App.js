@@ -3,6 +3,7 @@ import './App.css';
 // import Count from './components/Count';
 import Counter from './components/Counter';
 import React from 'react';
+import Navbar from './components/Navbar';
 
 
 function App() {
@@ -11,6 +12,8 @@ function App() {
 
   return (
     <div>
+     
+     <Navbar />
       {/* <Count />
       <Calculator /> */}
       <input
@@ -33,6 +36,7 @@ function App() {
       <Counter theme={theme} country="pakistan" />
       
       <Counter theme={theme} country="India" />
+       
 
     </div>
   );
