@@ -8,7 +8,7 @@ const MultipleStudent = () => {
     }
     // React.useEffect(getData, []);
 
-   
+   // nothig new
     
 
     return ( <div>  
