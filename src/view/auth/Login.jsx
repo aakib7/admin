@@ -1,58 +1,59 @@
 import { useState } from "react";
-import axios from "axios";
+// import { Button, Grid, TextField } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../services/axiosInstance";
 const Login = () => {
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [user_name,setUserName] = useState('');
-
-const sendPostRequest = async (e) => {
-    e.preventDefault();
-    axios.post('/users/register', {
-    "user_name": user_name,
-    "email": email,
-    "password": password
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
+  // const navigate = useNavigate();
+  
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
   });
-};
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // setEmail(user.email);
+  // setPassword(user.password);
 
+  
 
-
-
-
-
-    // const submitForm = async(e)=>{
+  // const handleLogin = () => {
+  //   new Promise((resolve, reject) => {
+  //     axiosInstance.post("/login", {email, password }).then((token) => {
+  //         localStorage.setItem("token", token);
+  //         resolve(token);
+  //       }).catch((err) => {
+  //         reject(err);
+  //       });
+  //   });
+  // }
     
-    // await axios.post('http://localhost:3001/users/register', {
-    // user_name: user_name,
-    // email: email,
-    // password: password}).then(function (response) {
-    // console.log(response);});
-
-
-    // }
-
-
-
     return ( <div>
+      <h1>Hello</h1>
         <form action="" method="POST">
-            <input placeholder="User Name" name = "user_name"
-            value={user_name}
-            onChange={(e)=>{setUserName(e.target.value)}}
-            /><br />
             <input placeholder="Email" name = "email"
-            value={email}
-            onChange={(e)=>{setEmail(e.target.value)}}
+            value={user.email}
+            onChange = {(e) => {
+              setUser({ ...user, email: e.target.value });
+            }}
              /><br />
-            <input placeholder="Password" name = "Password"
-             value={password}
-             onChange={(e)=>{setPassword(e.target.value)}}/><br />
+            <input placeholder="Password" name = "password"
+             value={user.password}
+             onChange = {(e) => {
+              setUser({ ...user, password: e.target.value });
+            }}/><br />
             <button type="submit"
-            onClick={sendPostRequest}>Submit</button>
+            onClick={(e) => {
+              axiosInstance
+                .post("/login", user)
+                .then((response) => {
+                  console.log(response);
+                  localStorage.setItem("jwt_access_token", response.data);
+                  window.location.replace("/admin");
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            }}>LogIn</button>
         </form>
     </div> );
 }
